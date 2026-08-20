@@ -1,0 +1,9 @@
+{
+  "name": "getAuthUrl",
+  "version": "1.0.0",
+  "description": "获取多多进宝授权链接",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

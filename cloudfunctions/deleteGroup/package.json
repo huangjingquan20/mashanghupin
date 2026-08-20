@@ -1,0 +1,9 @@
+{
+  "name": "deleteGroup",
+  "version": "1.0.0",
+  "description": "删除拼团",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

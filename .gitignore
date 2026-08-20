@@ -1,0 +1,38 @@
+# ===== 依赖目录 =====
+node_modules/
+miniprogram_npm/
+
+# ===== 微信开发者工具私有配置（含本机调试信息） =====
+project.private.config.json
+
+# ===== 云开发环境变量（不要在仓库提交任何密钥文件） =====
+.env
+.env.*
+!.env.example
+
+# ===== 密钥与证书 =====
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+
+# ===== 备份目录（旧版本残留） =====
+backup/
+
+# ===== 日志与临时文件 =====
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+Thumbs.db
+*.swp
+*.tmp
+.idea/
+.vscode/
+
+# ===== 构建产物 =====
+dist/
+build/
+miniprogram/dist/

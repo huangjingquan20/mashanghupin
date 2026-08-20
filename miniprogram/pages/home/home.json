@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "马上拼团",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "group-card": "/components/group-card/group-card"
+  }
+}

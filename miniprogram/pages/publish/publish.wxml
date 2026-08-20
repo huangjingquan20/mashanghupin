@@ -1,0 +1,134 @@
+<view class="publish-container">
+  <view class="publish-card">
+    <view class="publish-header">
+      <view class="publish-title">发布拼团</view>
+      <view class="publish-subtitle">上传商品图片，系统自动识别</view>
+    </view>
+
+    <!-- 步骤1: 上传图片 -->
+    <view class="upload-section" wx:if="{{step === 'upload'}}">
+      <view class="upload-area" bindtap="onChooseImage">
+        <view class="upload-camera-icon"><view class="camera-body"></view></view>
+        <view class="upload-text">点击上传拼团图片</view>
+        <view class="upload-tip">上传拼多多商品截图</view>
+      </view>
+    </view>
+
+    <!-- 上传中 -->
+    <view class="upload-section" wx:if="{{uploading}}">
+      <view class="upload-area">
+        <view class="spinner"></view>
+        <view class="upload-text">图片上传中...</view>
+      </view>
+    </view>
+
+    <!-- 步骤2: 分析中 -->
+    <view class="upload-section" wx:if="{{step === 'analyze' || analyzing}}">
+      <view class="image-preview">
+        <image class="preview-img" src="{{imageUrl}}" mode="aspectFill" />
+      </view>
+      <view class="analyze-status">
+        <view wx:if="{{analyzing}}" class="analyze-loading">
+          <view class="dot-pulse"></view>
+          <text>系统正在识别图片信息...</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 步骤3: 确认发布 -->
+    <view wx:if="{{step === 'confirm'}}" class="confirm-section">
+      <!-- 图片预览 -->
+      <view class="image-preview-small">
+        <image class="preview-img" src="{{imageUrl}}" mode="aspectFill" />
+        <view class="image-rechoose" bindtap="onDeleteImage">
+          <view class="rechoose-icon"></view>
+        </view>
+      </view>
+
+      <!-- OCR 结果 -->
+      <view class="ocr-result">
+        <view class="ocr-label">{{analyzed ? '系统已自动识别' : '系统未能识别，请手动填写'}}</view>
+        <view class="form-group">
+          <view class="form-label">商品标题</view>
+          <input class="form-input {{titleLocked ? 'form-input--locked' : ''}}" value="{{title}}" bindinput="onTitleInput" maxlength="100" disabled="{{titleLocked}}" />
+        </view>
+        <view wx:if="{{matchStatus}}" class="match-status {{matchStatus === '已自动匹配到商品' ? 'match-status--success' : 'match-status--fail'}}">
+          {{matchStatus}}
+        </view>
+        <view class="form-group">
+          <view class="form-label">拼团价格 <text class="decimal-hint">(请确认小数点位)</text></view>
+          <view class="price-row">
+            <text class="price-prefix">¥</text>
+            <input class="form-input price-field" value="{{price}}" bindinput="onPriceInput" type="digit" />
+          </view>
+        </view>
+      </view>
+
+      <!-- 链接输入 -->
+      <view class="form-group">
+        <view class="form-label">
+          拼多多链接
+          <text wx:if="{{linkRequired}}" class="required">*</text>
+          <text wx:else class="optional-hint">（选填）</text>
+        </view>
+        <input class="form-input" placeholder="粘贴链接" value="{{linkUrl}}" bindinput="onLinkInput" />
+      </view>
+
+      <!-- 分类选择 -->
+      <view class="form-group">
+        <view class="form-label">选择分类 <text class="required">*</text></view>
+        <view class="category-scroll">
+          <view
+            wx:for="{{categories}}"
+            wx:key="name"
+            class="cat-chip {{category === item.name ? 'cat-chip--active' : ''}}"
+            data-name="{{item.name}}"
+            bindtap="onCategorySelect"
+          >{{item.name}}</view>
+        </view>
+      </view>
+
+      <!-- 发布按钮 -->
+      <button class="submit-btn {{submitting ? 'submit-btn--disabled' : ''}}" bindtap="onSubmit" disabled="{{submitting}}">
+        {{submitting ? '发布中...' : '发布拼团'}}
+      </button>
+    </view>
+
+    <!-- 分享教程角标 -->
+    <view class="tutorial-corner" bindtap="onShowTutorial">
+      <text class="tutorial-q">?</text>
+      <text class="tutorial-label">分享教程</text>
+    </view>
+  </view>
+
+  <!-- 教程弹窗 -->
+  <view class="tutorial-overlay {{showTutorial ? 'tutorial-overlay--show' : ''}}" bindtap="onCloseTutorial">
+    <view class="tutorial-modal" catchtap="">
+      <view class="tutorial-modal__head">
+        <text class="modal-title">如何获取拼团图片？</text>
+        <view class="modal-close" bindtap="onCloseTutorial"><view class="close-x"></view></view>
+      </view>
+      <view class="tutorial-modal__body">
+        <view class="step">
+          <view class="step-badge">1</view>
+          <view class="step-content">
+            <text>在拼多多里点击【分享订单图片】</text>
+            <view class="step-img">
+              <view wx:if="{{tutorialImg}}">
+                <image class="tutorial-img" src="{{tutorialImg}}" mode="widthFix" binderror="onTutorialImgError" />
+              </view>
+              <view wx:else style="font-size:24rpx;color:#ccc;text-align:center;padding:30rpx;">加载图片中...</view>
+            </view>
+            <view wx:if="{{tutorialImgErr}}" style="margin-top:8rpx;font-size:20rpx;color:#ff4444;">加载失败: {{tutorialImgErr}}</view>
+          </view>
+        </view>
+        <view class="step">
+          <view class="step-badge">2</view>
+          <text>回到马上拼团小程序，点击「上传拼团图片」即可自动识别</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="bottom-placeholder"></view>
+</view>

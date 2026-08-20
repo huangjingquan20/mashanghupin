@@ -1,0 +1,9 @@
+{
+  "name": "copyGroup",
+  "version": "1.0.0",
+  "description": "记录复制次数",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

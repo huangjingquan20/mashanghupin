@@ -1,0 +1,61 @@
+<view class="mine-container">
+  <!-- 用户信息区 -->
+  <view class="user-section">
+    <view class="user-avatar">
+      <view class="avatar-placeholder"></view>
+    </view>
+    <view class="user-info">
+      <view class="user-name" wx:if="{{isLogin}}">微信用户</view>
+      <view class="user-name" wx:else>点击登录</view>
+      <view class="user-id">{{isLogin ? '已认证' : '登录后可发布拼团'}}</view>
+    </view>
+    <view class="feedback-entry" bindtap="onFeedback">反馈</view>
+  </view>
+
+  <!-- Tab 切换 -->
+  <view class="tab-section">
+    <view
+      wx:for="{{tabs}}"
+      wx:key="index"
+      class="tab-item {{activeTab === index ? 'tab-item--active' : ''}}"
+      data-index="{{index}}"
+      bindtap="onTabTap"
+    >
+      {{item}}
+      <view wx:if="{{activeTab === index}}" class="tab-underline"></view>
+    </view>
+  </view>
+
+  <!-- 我发布的拼团 -->
+  <view class="group-list" wx:if="{{activeTab === 0}}">
+    <group-card
+      wx:for="{{myGroups}}"
+      wx:key="_id"
+      group="{{item}}"
+      showFav="{{false}}"
+      bind:share="onShareGroup"
+    />
+    <view class="empty-state" wx:if="{{myGroups.length === 0}}">
+      <view class="empty-text">还没有发布拼团</view>
+      <view class="empty-tip">去发布一个吧～</view>
+    </view>
+  </view>
+
+  <!-- 我的收藏 -->
+  <view class="group-list" wx:if="{{activeTab === 1}}">
+    <group-card
+      wx:for="{{myFavorites}}"
+      wx:key="_id"
+      group="{{item}}"
+      favorited="{{true}}"
+      bind:share="onShareGroup"
+      bind:fav="onFavToggle"
+    />
+    <view class="empty-state" wx:if="{{myFavorites.length === 0}}">
+      <view class="empty-text">还没有收藏拼团</view>
+      <view class="empty-tip">收藏的商品过期后自动删除</view>
+    </view>
+  </view>
+
+  <view class="bottom-placeholder"></view>
+</view>

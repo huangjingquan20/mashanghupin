@@ -1,0 +1,93 @@
+<view class="home-container">
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <view class="search-box {{searchFocused ? 'search-box--focused' : ''}}">
+      <view class="search-icon"></view>
+      <input
+        class="search-input"
+        placeholder="搜索商品"
+        placeholder-style="color:#ccc"
+        value="{{keyword}}"
+        bindinput="onSearchInput"
+        bindconfirm="onSearchConfirm"
+        bindfocus="onSearchFocus"
+        bindblur="onSearchBlur"
+        confirm-type="search"
+      />
+      <view wx:if="{{keyword}}" class="search-clear" bindtap="onSearchClear">
+        <view class="clear-x"></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 搜索历史 -->
+  <view wx:if="{{searchFocused && !keyword && searchHistory.length > 0}}" class="history-panel">
+    <view class="history-head">
+      <text class="history-title">搜索历史</text>
+      <view class="history-del-all" bindtap="clearHistory">
+        <view class="trash-icon"></view>
+      </view>
+    </view>
+    <view class="history-list">
+      <view
+        wx:for="{{searchHistory}}"
+        wx:key="index"
+        class="history-tag"
+        data-keyword="{{item}}"
+        bindtap="onHistoryTap"
+      >{{item}}</view>
+    </view>
+  </view>
+
+  <!-- 分类标签栏 -->
+  <scroll-view class="category-bar" scroll-x enhanced show-scrollbar="{{false}}">
+    <view class="category-list">
+      <view
+        wx:for="{{categories}}"
+        wx:key="name"
+        class="category-tag {{activeCategory === item.name ? 'category-tag--active' : ''}}"
+        data-name="{{item.name}}"
+        bindtap="onCategoryTap"
+      >
+        {{item.name}}
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 拼团列表 -->
+  <view class="group-list" wx:if="{{groups.length > 0}}">
+    <group-card
+      wx:for="{{groups}}"
+      wx:key="_id"
+      group="{{item}}"
+      favorited="{{item._favorited}}"
+      bind:share="onShareGroup"
+      bind:fav="onFavGroup"
+    />
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{!loading && groups.length === 0}}">
+    <view wx:if="{{!loadError}}" class="empty-normal">
+      <view class="empty-icon"></view>
+      <view class="empty-text">暂无拼团</view>
+      <view class="empty-tip">快去发布第一个拼团吧～</view>
+    </view>
+    <view wx:else class="empty-error">
+      <view class="error-icon">!</view>
+      <view class="error-text">加载失败</view>
+      <view class="error-detail">{{loadError}}</view>
+    </view>
+  </view>
+
+  <!-- 加载 -->
+  <view class="load-more" wx:if="{{loading}}">
+    <view class="loading-spinner"></view>
+    <text>加载中...</text>
+  </view>
+  <view class="load-end" wx:if="{{!hasMore && groups.length > 0}}">
+    <text>— 已加载全部 —</text>
+  </view>
+
+  <view class="bottom-placeholder"></view>
+</view>

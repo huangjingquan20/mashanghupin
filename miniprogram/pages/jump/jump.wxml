@@ -1,0 +1,3 @@
+<view class="jump-container">
+  <view class="jump-tip">{{tip}}</view>
+</view>

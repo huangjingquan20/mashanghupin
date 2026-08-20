@@ -1,0 +1,10 @@
+当前代码状态 - 2026-05-24 19:02
+
+已完成的改动：
+1. group-card.js — 跳转策略修复（拼多多主版 pages/web/web + specialUrl=1）
+2. createGroup/index.js — 价格取低逻辑（OCR价 vs PDD API实时价）
+3. publish.wxml — placeholder 改为"粘贴链接"
+4. publish.js — 发布成功弹窗立即弹出
+5. pages/jump/ — 新增跳转页，分享直达参团
+6. app.json — 加 jump 路由
+7. home.js / mine.js — 分享路径改为跳转页

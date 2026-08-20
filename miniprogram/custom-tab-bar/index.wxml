@@ -1,0 +1,20 @@
+<view class="tab-bar">
+  <view
+    wx:for="{{list}}"
+    wx:key="index"
+    class="tab-item {{selected === index ? 'tab-item--active' : ''}} {{item.icon === 'plus' ? 'tab-item--plus' : ''}}"
+    data-index="{{index}}"
+    bindtap="switchTab"
+  >
+    <view wx:if="{{item.icon === 'home'}}" class="tab-icon tab-icon--home">
+      <view class="icon-house"></view>
+    </view>
+    <view wx:elif="{{item.icon === 'plus'}}" class="tab-icon tab-icon--plus">
+      <view class="icon-plus-sign"></view>
+    </view>
+    <view wx:elif="{{item.icon === 'mine'}}" class="tab-icon tab-icon--mine">
+      <view class="icon-person"></view>
+    </view>
+    <text class="tab-text {{selected === index ? 'tab-text--active' : ''}}">{{item.text}}</text>
+  </view>
+</view>

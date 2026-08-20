@@ -1,0 +1,29 @@
+<view class="feedback-page">
+  <view class="feedback-header">
+    <view class="feedback-title">意见反馈</view>
+    <view class="feedback-subtitle">你的反馈能帮我们做得更好</view>
+  </view>
+
+  <view wx:if="{{!submitted}}">
+    <textarea
+      class="feedback-input"
+      placeholder="写下你的建议或遇到的问题..."
+      placeholder-style="color:#ccc"
+      value="{{content}}"
+      bindinput="onInput"
+      maxlength="500"
+      auto-height
+    />
+    <view class="feedback-count">{{content.length}}/500</view>
+
+    <button class="submit-btn {{submitting ? 'submit-btn--disabled' : ''}}" bindtap="onSubmit" disabled="{{submitting}}">
+      {{submitting ? '提交中...' : '提交反馈'}}
+    </button>
+  </view>
+
+  <view wx:else class="feedback-done">
+    <view class="done-icon">✓</view>
+    <view class="done-text">感谢你的反馈！</view>
+    <view class="done-tip">我们会认真对待每一条建议</view>
+  </view>
+</view>

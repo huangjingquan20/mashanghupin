@@ -1,0 +1,9 @@
+{
+  "name": "getMyGroups",
+  "version": "1.0.0",
+  "description": "获取我发布的拼团",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

@@ -1,0 +1,39 @@
+<view class="group-card">
+  <view class="group-card__inner">
+    <!-- 商品图片 -->
+    <view class="group-card__image" catchtap="onImageTap">
+      <image class="group-card__img" src="{{group.image_url}}" mode="widthFix" lazy-load />
+      <view wx:if="{{!group.image_url}}" class="group-card__img-placeholder">
+        <view class="placeholder-icon"></view>
+      </view>
+    </view>
+
+    <!-- 商品信息 -->
+    <view class="group-card__info">
+      <!-- 标题 -->
+      <view class="group-card__title">{{group.title || '未命名商品'}}</view>
+
+      <!-- 价格 -->
+      <view class="group-card__bottom">
+        <view class="group-card__price-wrap">
+          <text class="price-symbol">¥</text>
+          <text class="price-value">{{group.price || '?'}}</text>
+          <text wx:if="{{group.price}}" class="price-label">起</text>
+        </view>
+      </view>
+
+      <!-- 分类标签 | 删除 | 收藏 | 立即参团 -->
+      <view class="group-card__actions">
+        <view wx:if="{{group.category}}" class="group-card__tag">{{group.category}}</view>
+        <view wx:if="{{showDelete}}" class="group-card__del-btn" catchtap="onDelete">{{deleteLabel}}</view>
+        <view wx:if="{{showFav}}" class="star-wrap" catchtap="onFavorite">
+          <view class="star {{favorited ? 'star--active' : ''}}"></view>
+        </view>
+        <view class="group-card__join-btn" catchtap="onJoin">立即参团</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 右上角转发按钮 -->
+  <button class="share-btn" open-type="share" catchtap="onShareTap">分享</button>
+</view>

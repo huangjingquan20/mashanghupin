@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "我的",
+  "usingComponents": {
+    "group-card": "/components/group-card/group-card"
+  }
+}
